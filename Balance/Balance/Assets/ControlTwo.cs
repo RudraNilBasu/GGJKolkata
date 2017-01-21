@@ -7,7 +7,7 @@ public class ControlTwo : MonoBehaviour {
     [SerializeField]
     GameObject blastEffect;
 
-    public float horizontalSpeed=2f;
+    public float horizontalSpeed=6f; // it was 2
 
     Camera cam;
     bool cameraFixed;
@@ -133,6 +133,20 @@ public class ControlTwo : MonoBehaviour {
         
     }
 
+    int timeUpOnce = 0;
+
+    public void timeUp()
+    {
+        /*
+        if (timeUpOnce == 0)
+        {
+            panelText.text = "It blasted...... in your face!";
+            panel.GetComponent<Animation>().Play("panelDown");
+            Instantiate(blastEffect, transform.position, Quaternion.identity);
+        }
+        */
+    }
+
     void loadScreen(int condn)
     {
         if(condn==1 && doOnce==0)
@@ -146,7 +160,8 @@ public class ControlTwo : MonoBehaviour {
         {
             // loss
             doOnce++;
-            panelText.text = "You have no idea of what you are doing :( ";
+            //panelText.text = "You have no idea of what you are doing :( ";
+            panelText.text = "Annnnnd..... You had only one job";
             Debug.Log("Playing the animation");
             panel.GetComponent<Animation>().Play("panelDown");
         }

@@ -28,9 +28,11 @@ public class countdown : MonoBehaviour {
             if (timeLeft < 0)
             {
                 countdownText.text = "0";
-                Time.timeScale = 0.2f;
+                theBall.GetComponent<ControlTwo>().timeUp();
+                //Time.timeScale = 0.2f;
                 if (theBall.GetComponent<BoxCollider2D>() != null)
                 {
+                    Debug.Log("timeup1");
                     theBall.GetComponent<BoxCollider2D>().enabled = false;
                 }
             }

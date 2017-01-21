@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/level06.unity
+- path: Assets/Projesh/Scenes/Menu.unity
   isLoaded: 1
   isActive: 1
