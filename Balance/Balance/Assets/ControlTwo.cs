@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class ControlTwo : MonoBehaviour {
     
+    public float horizontalSpeed=2f;
+
     Camera cam;
     bool cameraFixed;
 
@@ -32,7 +34,7 @@ public class ControlTwo : MonoBehaviour {
         cam = Camera.main;
         cameraFixed = false;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(new Vector2(100,0));
+        rb.AddForce(new Vector2(100,0)); // 100
 
         magnetUp.GetComponent<SpriteRenderer>().color = Color.black;
         magnetDown.GetComponent<SpriteRenderer>().color = Color.red;
@@ -70,7 +72,7 @@ public class ControlTwo : MonoBehaviour {
         // add horizontal velocity
         Vector2 temp;
         temp.y = rb.velocity.y;
-        temp.x = 2;
+        temp.x = horizontalSpeed; // 5 or 6 will be good for fast movement
         rb.velocity = temp;
 
         if(cameraFixed) {
