@@ -117,8 +117,9 @@ public class ControlTwo : MonoBehaviour {
         yield return new WaitForSeconds(LevelWaitingTime);
         Time.timeScale = 1.0f;
         Debug.Log("Show win screen");
-        gameObject.SetActive(false);
         loadScreen(condn);
+        gameObject.SetActive(false);
+        
     }
 
     void loadScreen(int condn)
@@ -135,6 +136,7 @@ public class ControlTwo : MonoBehaviour {
             // loss
             doOnce++;
             panelText.text = "Level Failed";
+            Debug.Log("Playing the animation");
             panel.GetComponent<Animation>().Play("panelDown");
         }
     }
