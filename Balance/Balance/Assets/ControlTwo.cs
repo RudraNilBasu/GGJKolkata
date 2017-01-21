@@ -34,10 +34,10 @@ public class ControlTwo : MonoBehaviour {
         cam = Camera.main;
         cameraFixed = false;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(new Vector2(100,0)); // 100
+        //rb.AddForce(new Vector2(100,0)); // 100
 
         magnetUp.GetComponent<SpriteRenderer>().color = Color.black;
-        magnetDown.GetComponent<SpriteRenderer>().color = Color.red;
+        magnetDown.GetComponent<SpriteRenderer>().color = Color.black;
     }
 
     // Update is called once per frame
@@ -48,7 +48,15 @@ public class ControlTwo : MonoBehaviour {
 
 	    if(Input.GetKeyDown(KeyCode.Space))
         {
-            rb.gravityScale *= -1;
+            if (rb.gravityScale == 0)
+            {
+                rb.gravityScale = 1;
+                GameObject.Find("GameManager").GetComponent<countdown>().startCountdown = true;
+            }
+            else
+            {
+                rb.gravityScale *= -1;
+            }
             if(rb.gravityScale>0)
             {
                 magnetUp.GetComponent<SpriteRenderer>().color = Color.black;
@@ -70,10 +78,13 @@ public class ControlTwo : MonoBehaviour {
 
     void FixedUpdate() {
         // add horizontal velocity
-        Vector2 temp;
-        temp.y = rb.velocity.y;
-        temp.x = horizontalSpeed; // 5 or 6 will be good for fast movement
-        rb.velocity = temp;
+        if (rb.gravityScale != 0)
+        {
+            Vector2 temp;
+            temp.y = rb.velocity.y;
+            temp.x = horizontalSpeed; // 5 or 6 will be good for fast movement
+            rb.velocity = temp;
+        }
 
         if(cameraFixed) {
             Vector3 camPos=cam.transform.position;
