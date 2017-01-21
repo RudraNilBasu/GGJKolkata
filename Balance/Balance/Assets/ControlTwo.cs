@@ -1,10 +1,25 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ControlTwo : MonoBehaviour {
     
     Camera cam;
     bool cameraFixed;
+
+    int doOnce = 0;
+    int collideOnce = 0;
+
+    float LevelWaitingTime = 1.0f;
+
+    [SerializeField]
+    SpriteRenderer magnetUp, magnetDown;
+
+    [SerializeField]
+    GameObject panel;
+
+    [SerializeField]
+    Text panelText;
 
     // Use this for initialization
     Rigidbody2D rb;
@@ -18,6 +33,9 @@ public class ControlTwo : MonoBehaviour {
         cameraFixed = false;
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.AddForce(new Vector2(100,0));
+
+        magnetUp.GetComponent<SpriteRenderer>().color = Color.black;
+        magnetDown.GetComponent<SpriteRenderer>().color = Color.red;
     }
 
     // Update is called once per frame
@@ -29,6 +47,16 @@ public class ControlTwo : MonoBehaviour {
 	    if(Input.GetKeyDown(KeyCode.Space))
         {
             rb.gravityScale *= -1;
+            if(rb.gravityScale>0)
+            {
+                magnetUp.GetComponent<SpriteRenderer>().color = Color.black;
+                magnetDown.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            else
+            {
+                magnetUp.GetComponent<SpriteRenderer>().color = Color.red;
+                magnetDown.GetComponent<SpriteRenderer>().color = Color.black;
+            }
         }
         //rb.velocity = Vector2.ClampMagnitude(rb.velocity, 10.0f);
         /*
@@ -54,8 +82,47 @@ public class ControlTwo : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        if(collideOnce!=0)
+        {
+            return;
+        }
+        collideOnce++;
         if(coll.gameObject.tag=="glass") {
             Debug.Log("Kill");
+            Time.timeScale = 0.2f;
+            rb.velocity = new Vector2(0,0);
+            StartCoroutine(waitAndLoad(0));
+        } else if (coll.gameObject.tag == "end")
+        {
+            Time.timeScale = 0.2f;
+            StartCoroutine(waitAndLoad(1));
+        }
+    }
+
+    IEnumerator waitAndLoad(int condn)
+    {
+        yield return new WaitForSeconds(LevelWaitingTime);
+        Time.timeScale = 1.0f;
+        Debug.Log("Show win screen");
+        gameObject.SetActive(false);
+        loadScreen(condn);
+    }
+
+    void loadScreen(int condn)
+    {
+        if(condn==1 && doOnce==0)
+        {
+            // win
+            doOnce++;
+            panelText.text = "Level Won";
+            panel.GetComponent<Animation>().Play("panelDown");
+        }
+        else if(condn==0 && doOnce==0)
+        {
+            // loss
+            doOnce++;
+            panelText.text = "Level Failed";
+            panel.GetComponent<Animation>().Play("panelDown");
         }
     }
 }
