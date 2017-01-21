@@ -14,9 +14,9 @@ public class levelSelect : MonoBehaviour {
 	
 	}
 
-    public void menu()
+    public void restart()
     {
-        SceneManager.LoadScene("menu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void exit()

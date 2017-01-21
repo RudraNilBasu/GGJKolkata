@@ -3,7 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class ControlTwo : MonoBehaviour {
-    
+
+    [SerializeField]
+    GameObject blastEffect;
+
     public float horizontalSpeed=2f;
 
     Camera cam;
@@ -31,6 +34,7 @@ public class ControlTwo : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1.0f;
         cam = Camera.main;
         cameraFixed = false;
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -60,11 +64,11 @@ public class ControlTwo : MonoBehaviour {
             if(rb.gravityScale>0)
             {
                 magnetUp.GetComponent<SpriteRenderer>().color = Color.black;
-                magnetDown.GetComponent<SpriteRenderer>().color = Color.red;
+                magnetDown.GetComponent<SpriteRenderer>().color = Color.white;
             }
             else
             {
-                magnetUp.GetComponent<SpriteRenderer>().color = Color.red;
+                magnetUp.GetComponent<SpriteRenderer>().color = Color.white;
                 magnetDown.GetComponent<SpriteRenderer>().color = Color.black;
             }
         }
@@ -89,6 +93,7 @@ public class ControlTwo : MonoBehaviour {
         if(cameraFixed) {
             Vector3 camPos=cam.transform.position;
             camPos.x = gameObject.transform.position.x;
+            //camPos.y = gameObject.transform.position.y;
             cam.transform.position = camPos;
         }
     }
@@ -100,10 +105,16 @@ public class ControlTwo : MonoBehaviour {
             return;
         }
         collideOnce++;
-        if(coll.gameObject.tag=="glass") {
+        Instantiate(blastEffect, transform.position, Quaternion.identity);
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.GetComponent<TrailRenderer>().enabled = false;
+        if (coll.gameObject.tag=="glass") {
             Debug.Log("Kill");
-            Time.timeScale = 0.2f;
+            //Time.timeScale = 0.2f;
             rb.velocity = new Vector2(0,0);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            //gameObject.GetComponent<TrailRenderer>().enabled = false;
+            //gameObject.transform.GetChild(0).gameObject.SetActive(false);
             StartCoroutine(waitAndLoad(0));
         } else if (coll.gameObject.tag == "end")
         {
@@ -128,14 +139,14 @@ public class ControlTwo : MonoBehaviour {
         {
             // win
             doOnce++;
-            panelText.text = "Level Won";
+            panelText.text = "YOLO, Job done!";
             panel.GetComponent<Animation>().Play("panelDown");
         }
         else if(condn==0 && doOnce==0)
         {
             // loss
             doOnce++;
-            panelText.text = "Level Failed";
+            panelText.text = "You have no idea of what you are doing :( ";
             Debug.Log("Playing the animation");
             panel.GetComponent<Animation>().Play("panelDown");
         }
