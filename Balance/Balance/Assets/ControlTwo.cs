@@ -7,6 +7,8 @@ public class ControlTwo : MonoBehaviour {
     [SerializeField]
     GameObject blastEffect;
 
+    GameObject gm;
+
     public float horizontalSpeed=6f; // it was 2
 
     Camera cam;
@@ -36,6 +38,7 @@ public class ControlTwo : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //gm = GameObject.Find("GameManager");
         Time.timeScale = 1.0f;
         cam = Camera.main;
         cameraFixed = false;
@@ -111,6 +114,13 @@ public class ControlTwo : MonoBehaviour {
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.GetComponent<TrailRenderer>().enabled = false;
         if (coll.gameObject.tag=="glass") {
+            // Camera Shake
+            /*
+            if(gm!=null)
+            {
+                gm.GetComponent<CameraShake>().Shake(0.02f, 0.5f);
+            }
+            */
             Debug.Log("Kill");
             //Time.timeScale = 0.2f;
             rb.velocity = new Vector2(0,0);
