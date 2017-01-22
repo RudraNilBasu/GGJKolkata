@@ -12,6 +12,8 @@ public class ControlTwo : MonoBehaviour {
     Camera cam;
     bool cameraFixed;
 
+    string[] failMsg = { "Frustrated yet ?", "Annnnnd..... You had only one job", "Having fun ?", "Try harder maybe ?"};
+
     int doOnce = 0;
     int collideOnce = 0;
 
@@ -161,7 +163,8 @@ public class ControlTwo : MonoBehaviour {
             // loss
             doOnce++;
             //panelText.text = "You have no idea of what you are doing :( ";
-            panelText.text = "Annnnnd..... You had only one job";
+            //panelText.text = "Annnnnd..... You had only one job";
+            panelText.text = failMsg[ Random.Range(0,failMsg.Length-1) ];
             Debug.Log("Playing the animation");
             panel.GetComponent<Animation>().Play("panelDown");
         }
