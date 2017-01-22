@@ -7,6 +7,9 @@ public class ControlTwo : MonoBehaviour {
     [SerializeField]
     GameObject blastEffect;
 
+	[SerializeField]
+	Text winText,loseText;
+
     GameObject gm;
 
     public float horizontalSpeed=6f; // it was 2
@@ -25,7 +28,8 @@ public class ControlTwo : MonoBehaviour {
     SpriteRenderer magnetUp, magnetDown;
 
     [SerializeField]
-    GameObject panel;
+	GameObject winPanel, losePanel;
+	//GameObject panel;
 
     [SerializeField]
     Text panelText;
@@ -38,6 +42,7 @@ public class ControlTwo : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+		LevelCanvasController.reference.CloseAllPanel (); // closing all the panels
         //gm = GameObject.Find("GameManager");
         Time.timeScale = 1.0f;
         cam = Camera.main;
@@ -165,8 +170,12 @@ public class ControlTwo : MonoBehaviour {
         {
             // win
             doOnce++;
-            panelText.text = "YOLO, Job done!";
-            panel.GetComponent<Animation>().Play("panelDown");
+            //panelText.text = "YOLO, Job done!";
+			if (winText != null) {
+				winText.text = "YOLO, Job done!";
+			}
+			LevelCanvasController.reference.ShowWinPanel ();
+			//panel.GetComponent<Animation>().Play("panelDown");
         }
         else if(condn==0 && doOnce==0)
         {
@@ -174,9 +183,13 @@ public class ControlTwo : MonoBehaviour {
             doOnce++;
             //panelText.text = "You have no idea of what you are doing :( ";
             //panelText.text = "Annnnnd..... You had only one job";
-            panelText.text = failMsg[ Random.Range(0,failMsg.Length-1) ];
+            //panelText.text = failMsg[ Random.Range(0,failMsg.Length-1) ];
+			if (loseText != null) {
+				loseText.text = failMsg [Random.Range (0, failMsg.Length - 1)];
+			}
             Debug.Log("Playing the animation");
-            panel.GetComponent<Animation>().Play("panelDown");
+			LevelCanvasController.reference.ShowLosePanel ();
+            //panel.GetComponent<Animation>().Play("panelDown");
         }
     }
 }

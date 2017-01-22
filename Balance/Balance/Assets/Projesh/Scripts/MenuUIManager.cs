@@ -73,4 +73,8 @@ public class MenuUIManager : MonoBehaviour {
 		levelsPanelAnim.SetTrigger ("Up");
 		UnityStandardAssets.ImageEffects.BloomController.reference.highLimitModifier = 2;
 	}
+
+	public void LoadLevel (int id) {
+		LevelLoader.reference.LoadLevel (id);
+	}
 }
