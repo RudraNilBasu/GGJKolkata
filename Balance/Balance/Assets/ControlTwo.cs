@@ -42,7 +42,9 @@ public class ControlTwo : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-		LevelCanvasController.reference.CloseAllPanel (); // closing all the panels
+        loseText = (GameObject.Find("LevelCanvas").transform.GetChild(0)).GetChild(0).gameObject.GetComponent<Text>();
+        winText = (GameObject.Find("LevelCanvas").transform.GetChild(1)).GetChild(0).gameObject.GetComponent<Text>();
+        LevelCanvasController.reference.CloseAllPanel (); // closing all the panels
         //gm = GameObject.Find("GameManager");
         Time.timeScale = 1.0f;
         cam = Camera.main;
@@ -171,9 +173,13 @@ public class ControlTwo : MonoBehaviour {
             // win
             doOnce++;
             //panelText.text = "YOLO, Job done!";
-			if (winText != null) {
-				winText.text = "YOLO, Job done!";
-			}
+            if (winText != null)
+            {
+                winText.text = "YOLO, Job done!";
+            }
+            else {
+                Debug.LogError("Win Text not found");
+            }
 			LevelCanvasController.reference.ShowWinPanel ();
 			//panel.GetComponent<Animation>().Play("panelDown");
         }
@@ -184,9 +190,13 @@ public class ControlTwo : MonoBehaviour {
             //panelText.text = "You have no idea of what you are doing :( ";
             //panelText.text = "Annnnnd..... You had only one job";
             //panelText.text = failMsg[ Random.Range(0,failMsg.Length-1) ];
-			if (loseText != null) {
-				loseText.text = failMsg [Random.Range (0, failMsg.Length - 1)];
-			}
+            if (loseText != null)
+            {
+                loseText.text = failMsg[Random.Range(0, failMsg.Length - 1)];
+            }
+            else {
+                Debug.LogError("Fail Text not found");
+            }
             Debug.Log("Playing the animation");
 			LevelCanvasController.reference.ShowLosePanel ();
             //panel.GetComponent<Animation>().Play("panelDown");
