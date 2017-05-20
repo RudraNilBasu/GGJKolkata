@@ -5,9 +5,6 @@
 ![banner](http://rudranilbasu.me/img/assets/trapped/Banner.png)
 
 ### Downloads
-
-![alt tag](https://i.gjcdn.net/data/games/3/67/229317/media/game-description/banner-yutrhxez.gif)
-
 * [Global Game Jam page (Jam version)](http://globalgamejam.org/2017/games/trapped)
 * [Game Jolt (Post jam version)](http://gamejolt.com/games/trapped/229317)
 
